@@ -94,7 +94,7 @@ public class TestController {
         o.put("data", findFiles);
         return o;
     }
-    
+
 
     @ResponseBody
     @RequestMapping(value = "/getStatisticReport", method = RequestMethod.GET)
@@ -121,7 +121,29 @@ public class TestController {
             OutputStream os = response.getOutputStream();
             os.write(data);
         } catch (IOException e) {
-            log.error("生成分析报文报错", e);
+            log.error("生成文件报错", e);
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/downloadLikeCollection", method = RequestMethod.GET)
+    public void downloadLikeCollection(HttpServletResponse response) {
+        List<File> files = new ArrayList<>();
+        files.add(new File("E:\\文件\\下载\\likeCollection.zip"));
+        files.add(new File("C:\\Users\\Administrator\\Desktop\\新建文件夹\\新建文件夹\\新建文本文档.txt"));
+        files.add(new File("C:\\Users\\Administrator\\Desktop\\新建文件夹\\123123.txt"));
+        files.add(new File("C:\\Users\\Administrator\\Desktop\\新建文件夹\\123123 - 副本.txt"));
+        byte[] data = developService.packToZip(files);
+
+        response.addHeader("Content-Disposition", "attachment;filename=likeCollection.zip");
+        response.addHeader("Content-Length", "" + data.length);
+        response.setContentType("application/octet-stream");
+
+        try {
+            OutputStream os = response.getOutputStream();
+            os.write(data);
+        } catch (IOException e) {
+            log.error("生成文件报错", e);
         }
     }
 }
