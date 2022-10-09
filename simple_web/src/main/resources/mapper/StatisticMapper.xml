@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="simpleweb.mapper.StatisticMapper">
+    <select id="findByTimeSection" parameterType="java.util.Date" resultType="simpleweb.entity.StatisticEntity">
+        select * from simple_random.statistic where create_time &gt;= #{startTime} and create_time &lt;= #{endTime};
+    </select>
+
+    <insert id="insert" parameterType="simpleweb.entity.StatisticEntity">
+        insert into simple_random.statistic
+        (path)
+        values
+        (#{path})
+    </insert>
+</mapper>
